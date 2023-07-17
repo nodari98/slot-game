@@ -164,3 +164,30 @@ body{
       margin: 2px;
     }
 }
+
+@media only screen and (min-width: 1024px) {
+  .main-container {
+      width: 80.0rem;
+  }
+  .screen-container {
+      width: 80.0rem;
+      height: 48.0rem;
+  }
+  .symbol {
+      width: 16.0rem;
+      height: 16.0rem;
+  }
+  .value-img {
+      width: 12.0rem;
+      height: 3.5rem;
+  }
+  .value-txt {
+      font-size: 3.0rem;
+  }
+  .btn {
+      width: 15.0rem;
+  }
+  .buttons-container {
+      margin-top: 2.0rem;
+  }
+}
