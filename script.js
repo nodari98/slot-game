@@ -14,7 +14,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// შევცვალოთ ანიმაციის მიმდევრობა (მეტად რეალურად)
 // დავამატოთ წითელი შავის ფუნქცია. (GAMBLE)
 // დავამატოთ ბონუსი. (BONUS GAME)
 // დავამატოთ მოგებული ხაზების გახაზვის ფუნქცია.
@@ -46,41 +45,91 @@ update(lastWin);
 document.getElementById("dep-btn").addEventListener("click", depositButton); // BUTTON FOR ADD DEPOSIT
 function depositButton(){
     pressSound.play();
-    depositMoney();
+    
+    var addedMoney = prompt("Deposit of money:");
+    var parsedMoney = parseFloat(addedMoney);
+  
+    if (!isNaN(parsedMoney)) {
+      if (parsedMoney >= 1 && parsedMoney <= 5000) {
+        balance += parsedMoney;
+        alert("Deposit successful. New balance: " + balance + "$");
+      } else {
+        alert("You can deposit from $1 to $5000.");
+      }
+    } else {
+      alert("Please enter a valid numerical value.");
+    }
+
     update(balance);
 }
 document.getElementById("bet-btn").addEventListener("click", betButton); // BUTTON FOR INCREASE BET
 function betButton(){
     pressSound.play();
-    increaseBet();
+    
+    if (bet < 10) {
+        bet++;
+        update(bet);
+    } else if (bet < 50) {
+        bet += 5;
+        update(bet);
+    } else if (bet < 100) {
+        bet += 10;
+        update(bet);
+    } else if (bet < 200) {
+        bet += 20;
+        update(bet);
+    } else if (bet < 500) {
+        bet += 50;
+        update(bet);
+    } else {
+        bet = 1;
+        update(bet);
+    }
 }
 document.getElementById("spin-btn").addEventListener("click", spinButton); // BUTTON FOR START SPIN
 function spinButton(){ 
     pressSound.play();
-    spin();
-}
-document.getElementById("stop-btn").addEventListener("click", stopButton); // BUTTON FORA STOP SPIN
-function stopButton(){
-    pressSound.play();
-    stopSpin();
-    updateLastWin();
-    spinStopSwitcher();
-}
-function spin(){
+
     if(balance >= bet){
+        spinSound.play();
+        spinSound.playbackRate = 1.2;
+
         balance -= bet;
         update(balance);
-        spinSound.play();
-        spinSound.playbackRate = 1.3;
-        generateSymbols();
         animateSpin();
-        checkForWin(); 
+        generateAndPushRandomSymbols();
+        chekcForWinningLines(); 
         spinStopSwitcher();
+
     } else {
         alert("You don't have enough credit.");
     }
 }
-function animateSpin(){   
+document.getElementById("stop-btn").addEventListener("click", stopButton); // BUTTON FORA STOP SPIN
+function stopButton(){
+    pressSound.play();
+    spinSound.pause();
+    spinSound.currentTime = 0;
+    
+    for(var i=1; i<=15; i++){
+        document.getElementById("cell-"+i).style.visibility = "visible"; 
+    }
+    
+    clearTimeout(rowTimeOut1);
+    clearTimeout(rowTimeOut2);
+    clearTimeout(rowTimeOut3);
+    clearTimeout(rowTimeOut4);
+    clearTimeout(rowTimeOut5);
+    clearTimeout(winTimeOut);
+    updateLastWin();
+    spinStopSwitcher();
+}
+
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
+
+function animateSpin(){  
+    
     for(var i=1; i<=15; i++){
         document.getElementById("cell-"+i).style.visibility = "hidden"; 
     }
@@ -96,6 +145,7 @@ function animateSpin(){
             document.getElementById("cell-11").style.visibility = "visible";
         }, 180);       
     }, 180);
+
     rowTimeOut2 = setTimeout(function() {
         setTimeout(function(){
             document.getElementById("cell-2").style.visibility = "visible";
@@ -107,6 +157,7 @@ function animateSpin(){
             document.getElementById("cell-12").style.visibility = "visible";
         }, 180); 
     }, 360);
+
     rowTimeOut3 = setTimeout(function() {
         setTimeout(function(){
             document.getElementById("cell-3").style.visibility = "visible";
@@ -117,7 +168,8 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-13").style.visibility = "visible";
         }, 180); 
-    }, 540);     
+    }, 540); 
+
     rowTimeOut4 = setTimeout(function() {
         setTimeout(function(){
             document.getElementById("cell-4").style.visibility = "visible";
@@ -128,8 +180,9 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-14").style.visibility = "visible";
         }, 180); 
-    }, 720);     
-      rowTimeOut5 = setTimeout(function() {
+    }, 720); 
+
+    rowTimeOut5 = setTimeout(function() {
         setTimeout(function(){
             document.getElementById("cell-5").style.visibility = "visible";
         }, 60);
@@ -141,14 +194,16 @@ function animateSpin(){
         }, 180); 
     }, 900);
 }
-function generateSymbols(){ 
+
+function generateAndPushRandomSymbols(){ 
     for(var i=1; i<=15; i++){
-        const randomSymbol =  Math.floor(Math.random() * 8) + 1;
+        const randomSymbol =  Math.floor(Math.random() * 6) + 1;
         document.getElementById("cell-"+i).style.backgroundImage = 'url("images/symbols/'+ randomSymbol +'.png")';
         symbolsContainer.push(randomSymbol); 
     }
 }
-function checkForWin() {
+
+function chekcForWinningLines() {
     lastWin = balance;
  
     if (symbolsContainer[0] === symbolsContainer[1] &&
@@ -243,15 +298,7 @@ function checkForWin() {
     
     symbolsContainer = [];
 }
-function update(value){
-    if(value == balance) {
-        document.getElementById("balance").textContent = balance + "$";
-    } else if (value == bet) {
-        document.getElementById("bet").textContent = bet + "$";
-    } else if (value == lastWin){
-        document.getElementById("last-win").textContent = lastWin + "$";
-    }
-}
+
 function spinStopSwitcher(){
     if (isSpinClicked) {
         document.getElementById("spin-btn").style.display = "none";
@@ -263,6 +310,7 @@ function spinStopSwitcher(){
         isSpinClicked = true;
     }
 }
+
 function updateLastWin(){
     update(balance);
     lastWin = balance - lastWin;
@@ -272,6 +320,7 @@ function updateLastWin(){
         win = false;
     }
 }
+
 function payOutMoney(comboAmmount,withSymbol){ 
     if (comboAmmount === 5) {
         switch(withSymbol){
@@ -362,52 +411,13 @@ function payOutMoney(comboAmmount,withSymbol){
         }   
     }
 }
-function depositMoney() {
-    var addedMoney = prompt("Deposit of money:");
-    var parsedMoney = parseFloat(addedMoney);
-  
-    if (!isNaN(parsedMoney)) {
-      if (parsedMoney >= 1 && parsedMoney <= 5000) {
-        balance += parsedMoney;
-        alert("Deposit successful. New balance: " + balance);
-      } else {
-        alert("You can deposit from $1 to $5000.");
-      }
-    } else {
-      alert("Please enter a valid numerical value.");
+
+function update(value){
+    if(value == balance) {
+        document.getElementById("balance").textContent = balance + "$";
+    } else if (value == bet) {
+        document.getElementById("bet").textContent = bet + "$";
+    } else if (value == lastWin){
+        document.getElementById("last-win").textContent = lastWin + "$";
     }
-}
-function increaseBet(){
-    if (bet < 10) {
-        bet++;
-        update(bet);
-    } else if (bet < 50) {
-        bet += 5;
-        update(bet);
-    } else if (bet < 100) {
-        bet += 10;
-        update(bet);
-    } else if (bet < 200) {
-        bet += 20;
-        update(bet);
-    } else if (bet < 500) {
-        bet += 50;
-        update(bet);
-    } else {
-        bet = 1;
-        update(bet);
-    }
-}
-function stopSpin(){
-    spinSound.pause();
-    spinSound.currentTime = 0;
-    for(var i=1; i<=15; i++){
-        document.getElementById("cell-"+i).style.visibility = "visible"; 
-    }
-    clearTimeout(rowTimeOut1);
-    clearTimeout(rowTimeOut2);
-    clearTimeout(rowTimeOut3);
-    clearTimeout(rowTimeOut4);
-    clearTimeout(rowTimeOut5);
-    clearTimeout(winTimeOut);
 }
