@@ -71,6 +71,7 @@ function spin(){
         balance -= bet;
         update(balance);
         spinSound.play();
+        spinSound.playbackRate = 1.3;
         generateSymbols();
         animateSpin();
         checkForWin(); 
