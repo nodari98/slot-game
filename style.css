@@ -97,7 +97,7 @@ body{
 #stop-btn{
     display: none;
 }
-
+/*************** MOBILE PORTRAT *********************/
 @media only screen and (max-width: 480px) {
     .main-logo{
         width: 20.0rem;
@@ -107,6 +107,7 @@ body{
     }
     .main-container {
         width: 36.2rem;
+        margin-bottom: 3rem;
     }
     .screen-container{
         width: 36.2rem;
@@ -129,17 +130,17 @@ body{
         width: 8.0rem;
     }
   }
-    
+    /*************** MOBILE LANDSCAPE *********************/
   @media only screen and (orientation: landscape) {
     .main-logo {
-        width: 15.0rem;
+        display: none;
     }
     .logo-container{
-
-      margin: 2.0rem 0 1.0rem 0;
+      margin: 1rem;
   }
     .main-container {
         width: 47.8rem;
+        margin-bottom: 3rem;
     }
     .screen-container {
         width:47.5rem;
@@ -164,7 +165,7 @@ body{
       margin: 2px;
     }
 }
-
+/*************** DESKTOP *********************/
 @media only screen and (min-width: 1024px) {
     .main-container {
         width: 80.0rem;

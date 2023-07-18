@@ -238,7 +238,7 @@ function checkForWin() {
     winTimeOut = setTimeout(function() {
         spinStopSwitcher();
         updateLastWin();
-    }, 1100);
+    }, 1230);
     
     symbolsContainer = [];
 }
