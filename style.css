@@ -1,72 +1,62 @@
 *{
-    margin: 0rem;
-    padding: 0rem;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 html{
-    font-size: 62.5%; /* 1rem = 10rem */
+    font-size: 62.5%;
 }
 body{
-    background-color: #E8D5C4;
-    display: flex;
-    justify-content: center;
+    height: auto;
+    width: 100rem;
 }
-/* *********************** */
+
+/* containers */
 .main-container {
-    width: 72.0rem;
+    width: 80%;
 }
-/* *********************** */
-.logo-container{
-    display: flex;
-    justify-content: center;
-    margin: 5.0rem 0 2.5rem 0;
+.logo{
+    width: 50%;
 }
-.main-logo{
-    width: 40.0rem;
-}
-/* *********************** */
 .screen-container{
-    width: 72.0rem;
-    height: 43.2rem;
+    height: 48em;
+    width: 100%;
     background-image: url('images/background.png');
     background-size:cover;
     background-position: center;
     display: flex;
     flex-wrap: wrap;
 }
-.symbol{
-    width: 14.4rem;
-    height: 14.4rem;  
+
+.symbol-container{
+    width: 20%;
+    height: 33.333%;
+    background-size: 100%;
 }
-/* *********************** */
+
 .value-display-container{
     display: flex;
     justify-content: space-between;
-    padding-top: 0.5rem;
     background-color: #CD1818;
-    border: 0.3rem solid black;
-    border-top-width: 0.1rem;
-    padding: 0.4rem;
 }
 .value-display{
     display: flex;
 }
 .value-img{
-    width: 10.5rem;
-    height: 3.0rem;
+    width: 100%;
+    height: 3.0em;
     
 }
 .value-txt{
-    font-size: 2.7rem;
-    font-weight: bold;
+    font-size: 2.5em;
     color: white;
 }
-/* *********************** */
+
+/* buttons */
 .buttons-container{
     display: flex;
-    justify-content:center;
-    gap: 2.5rem;
-    margin-top: 1.0rem;
+    gap: 2%;
+    margin-top: 1.0em;
 }
 .btn {
     --bg: #e74c3c;
@@ -85,111 +75,62 @@ body{
     letter-spacing: 1px;
     box-shadow: #c0392b 0px 7px 2px, #000 0px 8px 5px;
 }
-  
 .btn:hover {
     opacity: 1;
 }
-  
 .btn:active {
     top: 4px;
     box-shadow: #c0392b 0px 3px 2px,#000 0px 3px 5px;
 }
+
+/********* LINES *********/
+.line-container{
+    height: 48em;
+    width: 80em;
+    position: absolute;
+}
+.hr-1 {
+    position: absolute;
+    top: 15%;
+    width: 100%;
+    display: none;
+}
+.hr-2 {
+    position: absolute;
+    top: 47%;
+    width: 100%;
+    display: none;
+}
+.hr-3 {
+    position: absolute;
+    top: 80%;
+    width: 100%;
+    display: none;
+}
+.hr-4 {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    display: none;
+}
+.hr-5 {
+    position: absolute;
+    top: 9%;
+    width: 100%;
+    display: none;
+}
+
+
+/* ID selectors */
 #stop-btn{
     display: none;
 }
-/*************** MOBILE PORTRAT *********************/
+
+
+
+/* mobile responsive design */
 @media only screen and (max-width: 480px) {
-    .main-logo{
-        width: 20.0rem;
-    }
-    .logo-container{
-        margin: 3.0rem 0 1.5rem 0;
-    }
-    .main-container {
-        width: 36.2rem;
-        margin-bottom: 3rem;
-    }
-    .screen-container{
-        width: 36.2rem;
-        height: 21.72rem;
-        
-    }
-    .symbol{
-        width: 7.24rem;
-        height: 7.24rem;
-        background-size: 7.24rem; 
-    }
-    .value-img{
-        width: 6.0rem;
-        height: 1.7rem;
-    }
-    .value-txt{
-        font-size: 1.4rem;
-    }
-    .btn {
-        width: 8.0rem;
-    }
-  }
-    /*************** MOBILE LANDSCAPE *********************/
-  @media only screen and (orientation: landscape) {
-    .main-logo {
-        display: none;
-    }
-    .logo-container{
-      margin: 1rem;
-  }
-    .main-container {
-        width: 47.8rem;
-        margin-bottom: 3rem;
-    }
-    .screen-container {
-        width:47.5rem;
-        height: 28.5rem;
-    }
-    .symbol {
-        width: 9.5rem;
-        height: 9.5rem;
-        background-size: 9.5rem;
-    }
-    .value-img {
-        width: 8.0rem;
-        height: 2.3rem;
-    }
-    .value-txt {
-        font-size: 1.8rem;
-    }
-    .btn {
-        width: 12.0rem;
-    }
-    .buttons-container{
-      margin: 2px;
-    }
-}
-/*************** DESKTOP *********************/
-@media only screen and (min-width: 1024px) {
-    .main-container {
-        width: 80.0rem;
-    }
-    .screen-container {
-        width: 80.0rem;
-        height: 48.0rem;
-    }
-    .symbol {
-        width: 16.0rem;
-        height: 16.0rem;
-        background-size: 16.0rem;
-    }
-    .value-img {
-        width: 12.0rem;
-        height: 3.5rem;
-    }
-    .value-txt {
-        font-size: 3.0rem;
-    }
-    .btn {
-        width: 15.0rem;
-    }
-    .buttons-container {
-        margin-top: 2.0rem;
-    }
-}
+
+ }
+
+
