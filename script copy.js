@@ -11,8 +11,6 @@
 ////__4.Added responsive web design, fixed landscape mode not responding.__________________________________________________////
 ////__5.Rearranged HTML,CSS & JS codes improved code quality, readability and flow.________________________________________////
 ////_______________________________________________________________________________________________________________________////
-////__UPDATE: V1.0.2_______________________________________________________________________________________________________////
-////__1.added mark line when win, now you can easily see which line wins.__________________________________________________////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -22,25 +20,14 @@
 // დავამატოთ ხაზების შეცვლის ფუნქცია.
 
 
-/* variables */
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pressSound = new Audio("sounds/press.mp3"); // BUTTON CLICK SOUND
 const coinDropSound = new Audio("sounds/coindrop.mp3"); // WIN SOUND
+const spinSound = new Audio("sounds/spin.mp3"); // SPIN SOUND
 
 let balance = 100; // SET BALANCE
-update(balance);
 let bet = 1; // SET BET
-update(bet);
 let lastWin = 0; // SET LAST WIN
-update(lastWin);
-
-let line1;
-let line2;
-let line3;
-let line4;
-let line5;
-
-let spinEndTime = 1430; // TIME WHEN SPIN FULL CICLE ENDS
-
 
 let rowTimeOut1, rowTimeOut2, rowTimeOut3, rowTimeOut4, rowTimeOut5; // TO STOP SPIN ANIMATION
 let winTimeOut; // TO GET INSTANT PAYOUT IF WIN - FOR STOP BUTTON
@@ -49,26 +36,28 @@ let win = false; // TO CHECK IF WIN
 let symbolsContainer = []; // TO STORE SYMBOL INDEXES ON EACH SPIN
 let isSpinClicked = true; //FOR SPIN/STOP BUTTON SWITCH
 
+//UPDATE VALUE DISPLAY
+update(balance);
+update(bet);
+update(lastWin);
 
-let lineTimeout1,lineTimeout2,lineTimeout3,lineTimeout4,lineTimeout5;
-/* end of variables */
-
+//BUTTONS WITH FUNCTIONS
 document.getElementById("dep-btn").addEventListener("click", depositButton); // BUTTON FOR ADD DEPOSIT
 function depositButton(){
     pressSound.play();
     
-    var addedMoney = prompt("თანხის შეტანა:");
+    var addedMoney = prompt("Deposit of money:");
     var parsedMoney = parseFloat(addedMoney);
   
     if (!isNaN(parsedMoney)) {
       if (parsedMoney >= 1 && parsedMoney <= 5000) {
         balance += parsedMoney;
-        alert("თანხა წარმატებით ჩაირიცხა. თქვენი ახალი ბალანსია: " + balance + "$");
+        alert("Deposit successful. New balance: " + balance + "$");
       } else {
-        alert("თანხის შეტანა შესაძლებელია 1$ დან 5000$ მდე.");
+        alert("You can deposit from $1 to $5000.");
       }
     } else {
-      alert("გთხოვთ მიუთითოთ თანხა ციფრებში.");
+      alert("Please enter a valid numerical value.");
     }
 
     update(balance);
@@ -100,22 +89,28 @@ function betButton(){
 document.getElementById("spin-btn").addEventListener("click", spinButton); // BUTTON FOR START SPIN
 function spinButton(){ 
     pressSound.play();
+
     if(balance >= bet){
+        spinSound.play();
+        spinSound.playbackRate = 1.2;
+
         balance -= bet;
         update(balance);
-        generateAndPushRandomSymbols();
-        clearLastSpin();
         animateSpin();
-        chekcForWinningLines();
+        generateAndPushRandomSymbols();
+        chekcForWinningLines(); 
         spinStopSwitcher();
 
     } else {
-        alert("თქვენ არ გაქვთ საკმარისი თანხა.");
+        alert("You don't have enough credit.");
     }
 }
 document.getElementById("stop-btn").addEventListener("click", stopButton); // BUTTON FORA STOP SPIN
 function stopButton(){
-    pressSound.play();  
+    pressSound.play();
+    spinSound.pause();
+    spinSound.currentTime = 0;
+    
     for(var i=1; i<=15; i++){
         document.getElementById("cell-"+i).style.visibility = "visible"; 
     }
@@ -126,27 +121,17 @@ function stopButton(){
     clearTimeout(rowTimeOut4);
     clearTimeout(rowTimeOut5);
     clearTimeout(winTimeOut);
-    clearTimeout(lineTimeout1);
-    clearTimeout(lineTimeout2);
-    clearTimeout(lineTimeout3);
-    clearTimeout(lineTimeout4);
-    clearTimeout(lineTimeout5);
-    showWinningLines();
     updateLastWin();
     spinStopSwitcher();
 }
 
-/* functions */
-//I'ts done don't touch.
-function generateAndPushRandomSymbols(){ 
-    for(var i=1; i<=15; i++){
-        const randomSymbol =  Math.floor(Math.random() * 6) + 1;
-        document.getElementById("cell-"+i).style.backgroundImage = 'url("images/symbols/'+ randomSymbol +'.png")';
-        symbolsContainer.push(randomSymbol); 
-    }
-}
-//I'ts done don't touch.
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCTIONS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<//
+
 function animateSpin(){  
+    for(var i=1; i<=15; i++){
+        document.getElementById("cell-"+i).style.visibility = "hidden"; 
+    }
 
     rowTimeOut1 = setTimeout(function() {
         setTimeout(function(){
@@ -158,7 +143,7 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-11").style.visibility = "visible";
         }, 180);       
-    }, 250);
+    }, 180);
 
     rowTimeOut2 = setTimeout(function() {
         setTimeout(function(){
@@ -170,7 +155,7 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-12").style.visibility = "visible";
         }, 180); 
-    }, 500);
+    }, 360);
 
     rowTimeOut3 = setTimeout(function() {
         setTimeout(function(){
@@ -182,7 +167,7 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-13").style.visibility = "visible";
         }, 180); 
-    }, 750); 
+    }, 540); 
 
     rowTimeOut4 = setTimeout(function() {
         setTimeout(function(){
@@ -194,7 +179,7 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-14").style.visibility = "visible";
         }, 180); 
-    }, 1000); 
+    }, 720); 
 
     rowTimeOut5 = setTimeout(function() {
         setTimeout(function(){
@@ -206,9 +191,17 @@ function animateSpin(){
         setTimeout(function(){
             document.getElementById("cell-15").style.visibility = "visible";
         }, 180); 
-    }, 1250);
+    }, 900);
 }
-//I'ts done don't touch.
+
+function generateAndPushRandomSymbols(){ 
+    for(var i=1; i<=15; i++){
+        const randomSymbol =  Math.floor(Math.random() * 6) + 1;
+        document.getElementById("cell-"+i).style.backgroundImage = 'url("images/symbols/'+ randomSymbol +'.png")';
+        symbolsContainer.push(randomSymbol); 
+    }
+}
+
 function chekcForWinningLines() {
     lastWin = balance;
  
@@ -217,18 +210,15 @@ function chekcForWinningLines() {
         symbolsContainer[2] === symbolsContainer[3] &&
         symbolsContainer[3] === symbolsContainer[4]) {
         win = true;
-        line1 = true;
         payOutMoney(5, symbolsContainer[0]);
     } else if (symbolsContainer[0] === symbolsContainer[1] &&
                symbolsContainer[1] === symbolsContainer[2] &&
                symbolsContainer[2] === symbolsContainer[3]) {
         win = true;
-        line1 = true;
         payOutMoney(4, symbolsContainer[0]);
     } else if (symbolsContainer[0] === symbolsContainer[1] &&
                symbolsContainer[1] === symbolsContainer[2]) {
         win = true;
-        line1 = true;
         payOutMoney(3, symbolsContainer[0]);
     }
 
@@ -237,18 +227,15 @@ function chekcForWinningLines() {
         symbolsContainer[7] === symbolsContainer[8] &&
         symbolsContainer[8] === symbolsContainer[9]) {
         win = true;
-        line2 = true;
         payOutMoney(5, symbolsContainer[5]);
     } else if (symbolsContainer[5] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[7] &&
                symbolsContainer[7] === symbolsContainer[8]) {
         win = true;
-        line2 = true;
         payOutMoney(4, symbolsContainer[5]);
     } else if (symbolsContainer[5] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[7]) {
         win = true;
-        line2 = true;
         payOutMoney(3, symbolsContainer[5]);
     }
 
@@ -257,18 +244,15 @@ function chekcForWinningLines() {
         symbolsContainer[12] === symbolsContainer[13] &&
         symbolsContainer[13] === symbolsContainer[14]) {
         win = true;
-        line3 = true;
         payOutMoney(5, symbolsContainer[10]);
     } else if (symbolsContainer[10] === symbolsContainer[11] &&
                symbolsContainer[11] === symbolsContainer[12] &&
                symbolsContainer[12] === symbolsContainer[13]) {
         win = true;
-        line3 = true;
         payOutMoney(4, symbolsContainer[10]);
     } else if (symbolsContainer[10] === symbolsContainer[11] &&
                symbolsContainer[11] === symbolsContainer[12]) {
         win = true;
-        line3 = true;
         payOutMoney(3, symbolsContainer[10]);
     }
 
@@ -277,65 +261,43 @@ function chekcForWinningLines() {
         symbolsContainer[12] === symbolsContainer[8] &&
         symbolsContainer[8] === symbolsContainer[4]) {
         win = true;
-        line4 = true;
         payOutMoney(5, symbolsContainer[0]);
     } else if (symbolsContainer[0] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[12] &&
                symbolsContainer[12] === symbolsContainer[8]) {
         win = true;
-        line4 = true;
         payOutMoney(4, symbolsContainer[0]);
     } else if (symbolsContainer[0] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[12]) {
         win = true;
-        line4 = true;
         payOutMoney(3, symbolsContainer[0]);
     }
- 
+
     if (symbolsContainer[10] === symbolsContainer[6] &&
         symbolsContainer[6] === symbolsContainer[2] &&
         symbolsContainer[2] === symbolsContainer[8] &&
         symbolsContainer[8] === symbolsContainer[14]) {
         win = true;
-        line5 = true;
         payOutMoney(5, symbolsContainer[10]);
     } else if (symbolsContainer[10] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[2] &&
                symbolsContainer[2] === symbolsContainer[8]) {
         win = true;
-        line5 = true;
         payOutMoney(4, symbolsContainer[10]);
     } else if (symbolsContainer[10] === symbolsContainer[6] &&
                symbolsContainer[6] === symbolsContainer[2]) {
         win = true;
-        line5 = true;
         payOutMoney(3, symbolsContainer[10]);
     }
- 
+    
     winTimeOut = setTimeout(function() {
-        showWinningLines();
         spinStopSwitcher();
         updateLastWin();
-    }, spinEndTime);
+    }, 1230);
     
     symbolsContainer = [];
 }
-//I'ts done don't touch.
-function updateLastWin(){
-    update(balance);
-    lastWin = balance - lastWin;
-    if(win){
-        update(lastWin);
-        coinDropSound.play();
-        win = false;
-        line1 = false;
-        line2 = false;
-        line3 = false;
-        line4 = false;
-        line5 = false;
-    }
-}
-//I'ts done don't touch.
+
 function spinStopSwitcher(){
     if (isSpinClicked) {
         document.getElementById("spin-btn").style.display = "none";
@@ -347,16 +309,17 @@ function spinStopSwitcher(){
         isSpinClicked = true;
     }
 }
-//I'ts done don't touch.
-function clearLastSpin (){
-    for(var i=1; i<=5; i++){
-        document.getElementById("hr"+i).style.display = "none";
-    }
-    for(var i=1; i<=15; i++){
-        document.getElementById("cell-"+i).style.visibility = "hidden"; 
+
+function updateLastWin(){
+    update(balance);
+    lastWin = balance - lastWin;
+    if(win){
+        update(lastWin);
+        coinDropSound.play();
+        win = false;
     }
 }
-//I'ts done don't touch.
+
 function payOutMoney(comboAmmount,withSymbol){ 
     if (comboAmmount === 5) {
         switch(withSymbol){
@@ -447,7 +410,7 @@ function payOutMoney(comboAmmount,withSymbol){
         }   
     }
 }
-//I'ts done don't touch.
+
 function update(value){
     if(value == balance) {
         document.getElementById("balance").textContent = balance + "$";
@@ -455,23 +418,5 @@ function update(value){
         document.getElementById("bet").textContent = bet + "$";
     } else if (value == lastWin){
         document.getElementById("last-win").textContent = lastWin + "$";
-    }
-}
-//I'ts done don't touch.
-function showWinningLines(){
-    if(line1){
-        document.getElementById("hr1").style.display = "block";
-    }
-    if(line2){
-        document.getElementById("hr2").style.display = "block";
-    }
-    if(line3){
-        document.getElementById("hr3").style.display = "block";
-    }
-    if(line4){
-        document.getElementById("hr4").style.display = "block";
-    }
-    if(line5){
-        document.getElementById("hr5").style.display = "block";
     }
 }
