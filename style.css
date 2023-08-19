@@ -3,37 +3,24 @@
     padding: 0;
     box-sizing: border-box;
 }
-html{
-    font-size: 62.5%;
-}
-body{
-    height: auto;
-    width: 100rem;
-}
-
 /* containers */
 .main-container {
-    width: 80%;
-}
-.logo{
-    width: 50%;
+    width: 480px;
 }
 .screen-container{
-    height: 48em;
-    width: 100%;
+    width: 480px;
+    height: 288px;
     background-image: url('images/background.png');
     background-size:cover;
     background-position: center;
     display: flex;
     flex-wrap: wrap;
 }
-
 .symbol-container{
     width: 20%;
     height: 33.333%;
     background-size: 100%;
 }
-
 .value-display-container{
     display: flex;
     justify-content: space-between;
@@ -43,12 +30,12 @@ body{
     display: flex;
 }
 .value-img{
-    width: 100%;
-    height: 3.0em;
+    width: 60px;
+    height: 25px;
     
 }
 .value-txt{
-    font-size: 2.5em;
+    font-size: 20px;
     color: white;
 }
 
@@ -85,8 +72,8 @@ body{
 
 /********* LINES *********/
 .line-container{
-    height: 48em;
-    width: 80em;
+    height: 288px;
+    width: 480px;
     position: absolute;
 }
 .hr-1 {
