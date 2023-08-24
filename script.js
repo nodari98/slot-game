@@ -475,3 +475,12 @@ function showWinningLines(){
         document.getElementById("hr5").style.display = "block";
     }
 }
+
+
+document.getElementById('zoomOutButton').addEventListener('click', function() {
+    // Calculate the new scale for zooming out (e.g., 0.8 for 80%)
+    var newScale = 0.7;
+
+    // Apply the new scale to the body element
+    document.body.style.transform = 'scale(' + newScale + ')';
+});

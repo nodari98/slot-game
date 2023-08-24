@@ -1,82 +1,59 @@
+ /* main parameters  */
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
-body{
+.logo-container{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+.logo{
+    width: 200px;
+}
+.sizing-container {
+    width: 500px;
     height: 500px;
+
 }
-/* containers */
-.main-container {
-    width: 400px;
-}
-.screen-container{
-    width: 400px;
-    height: 240px;
+.game-display{
+    height: 300px;
+    background-color: #CD1818;
     background-image: url('images/background.png');
     background-size:cover;
     background-position: center;
     display: flex;
     flex-wrap: wrap;
 }
-.symbol-container{
+.symbol{
     width: 20%;
-    height: 33.333%;
     background-size: 100%;
 }
-.value-display-container{
+.main-values-container{
     display: flex;
     justify-content: space-between;
     background-color: #CD1818;
+
+    border-top: 0;
 }
-.value-display{
+.value-container{
     display: flex;
 }
 .value-img{
-    width: 60px;
     height: 25px;
-    
 }
 .value-txt{
     font-size: 20px;
-    color: white;
-}
-
-/* buttons */
-.buttons-container{
-    display: flex;
-    gap: 2%;
-    margin-top: 1.0em;
-}
-.btn {
-    --bg: #e74c3c;
-    --text-color: #fff;
-    position: relative;
-    width: 150px;
-    border: none;
-    background: var(--bg);
-    color: var(--text-color);
-    padding: 1em;
     font-weight: bold;
-    text-transform: uppercase;
-    transition: 0.2s;
-    border-radius: 5px;
-    opacity: 0.8;
-    letter-spacing: 1px;
-    box-shadow: #c0392b 0px 7px 2px, #000 0px 8px 5px;
-}
-.btn:hover {
-    opacity: 1;
-}
-.btn:active {
-    top: 4px;
-    box-shadow: #c0392b 0px 3px 2px,#000 0px 3px 5px;
+    color: white;
 }
 
 /********* LINES *********/
 .line-container{
-    height: 240px;
-    width: 400px;
+    height: 300px;
+    width: 500px;
     position: absolute;
 }
 .hr-1 {
@@ -110,9 +87,54 @@ body{
     display: none;
 }
 
+
+
+/*******************************/
+.buttons-container{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+    margin-top: 5px;
+}
+.btn {
+    --bg: #e74c3c;
+    --text-color: #fff;
+    position: relative;
+    width: 100px;
+    border: none;
+    background: var(--bg);
+    color: var(--text-color);
+    padding: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.2s;
+    border-radius: 5px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    box-shadow: #c0392b 0px 7px 2px, #000 0px 8px 5px;
+}
+.btn:hover {
+    opacity: 1;
+}
+.btn:active {
+    top: 4px;
+    box-shadow: #c0392b 0px 3px 2px,#000 0px 3px 5px;
+}
 #stop-btn{
     display: none;
 }
 
 
 
+
+#zoomOutButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
