@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: content-box;
+    -webkit-tap-highlight-color: transparent;
 }
 .logo-container{
     width: 500px;
@@ -137,4 +138,18 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+
+
+@media (max-aspect-ratio: 1/1) {
+    /* This targets devices in portrait mode (height greater than width) */
+    /* You can adjust this media query to target specific devices or orientations */
+    /* For devices in landscape mode, you might use: @media (min-aspect-ratio: 1/1) */
+    /* Or simply omit the media query if you want the rule to apply to all devices */
+    
+    /* Prevent double-tap zooming */
+    html, body {
+        touch-action: manipulation;
+    }
 }
