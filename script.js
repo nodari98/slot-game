@@ -24,7 +24,9 @@
 
 /* variables */
 const pressSound = new Audio("sounds/press.mp3"); // BUTTON CLICK SOUND
+pressSound.load();
 const coinDropSound = new Audio("sounds/coindrop.mp3"); // WIN SOUND
+coinDropSound.load();
 
 let balance = 100; // SET BALANCE
 update(balance);
