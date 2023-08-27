@@ -23,11 +23,8 @@
 
 
 /* variables */
-// const pressSound = new Audio("sounds/press.mp3"); // BUTTON CLICK SOUND
-const pressSound = document.getElementById("press-sound");
-pressSound.load();
+const pressSound = new Audio("sounds/press.mp3"); // BUTTON CLICK SOUND
 const coinDropSound = new Audio("sounds/coindrop.mp3"); // WIN SOUND
-coinDropSound.load();
 
 let balance = 100; // SET BALANCE
 update(balance);
