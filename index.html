@@ -1,53 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <title>5 CHINO HOT</title>
-</head>
-<body>
-    <div class="logo-container">
-        <img src="images/logo.png" alt="logo" class="logo">
-    </div>
-    <div class="sizing-container">
-        <div class="game-display">
-            <div class="line-container"><img class="hr-1" id="hr1" src="images/line1.png" alt=""></div>
-            <div class="line-container"><img class="hr-2" id="hr2" src="images/line2.png" alt=""></div>
-            <div class="line-container"><img class="hr-3" id="hr3" src="images/line3.png" alt=""></div>
-            <div class="line-container"><img class="hr-4" id="hr4" src="images/line4.png" alt=""></div>
-            <div class="line-container"><img class="hr-5" id="hr5" src="images/line5.png" alt=""></div>
-
-            <div class="symbol" id="cell-1"></div>
-            <div class="symbol" id="cell-2"></div>
-            <div class="symbol" id="cell-3"></div>
-            <div class="symbol" id="cell-4"></div>
-            <div class="symbol" id="cell-5"></div>
-            <div class="symbol" id="cell-6"></div>
-            <div class="symbol" id="cell-7"></div>
-            <div class="symbol" id="cell-8"></div>
-            <div class="symbol" id="cell-9"></div>
-            <div class="symbol" id="cell-10"></div>
-            <div class="symbol" id="cell-11"></div>
-            <div class="symbol" id="cell-12"></div>
-            <div class="symbol" id="cell-13"></div>
-            <div class="symbol" id="cell-14"></div>
-            <div class="symbol" id="cell-15"></div>
+    <head>
+        <meta charset="UTF-8"> 
+        <!-- MAXIMUM SCALE AND USER SCALABLE IS USED FOR DONT GIVE ZOOM ON MOBILE DEVICE WHEN DOUBLE CLICKED -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="style.css">
+        <script defer src="script.js"></script>
+        <title>5 CHINO HOT</title>
+    </head>
+    <body>
+        <!-- THIS DIV CONTAINS FULL GAME CONTENT -->
+        <div class="full-container">
+            <img src="images/logo.png" alt="logo" class="logo">
+            <!-- CONTAINER FOR ADJUST GAME DISPLAY FLOW -->
+            <div class="sizing-container">
+                <!-- THIS CONTAINER IS FOR DISPLAY SCREEN  -->
+                <div class="game-display">
+                    <!-- THIS IS SYMBOLS TO DISPLAY WHEN SPIN -->
+                    <div class="symbol" id="cell-1"></div>
+                    <div class="symbol" id="cell-2"></div>
+                    <div class="symbol" id="cell-3"></div>
+                    <div class="symbol" id="cell-4"></div>
+                    <div class="symbol" id="cell-5"></div>
+                    <div class="symbol" id="cell-6"></div>
+                    <div class="symbol" id="cell-7"></div>
+                    <div class="symbol" id="cell-8"></div>
+                    <div class="symbol" id="cell-9"></div>
+                    <div class="symbol" id="cell-10"></div>
+                    <div class="symbol" id="cell-11"></div>
+                    <div class="symbol" id="cell-12"></div>
+                    <div class="symbol" id="cell-13"></div>
+                    <div class="symbol" id="cell-14"></div>
+                    <div class="symbol" id="cell-15"></div>
+                    <!-- THIS IS LINES TO DISPLAY WHEN WIN -->
+                    <div class="line-container"><img class="hr-1" id="hr1" src="images/line1.png" alt=""></div>
+                    <div class="line-container"><img class="hr-2" id="hr2" src="images/line2.png" alt=""></div>
+                    <div class="line-container"><img class="hr-3" id="hr3" src="images/line3.png" alt=""></div>
+                    <div class="line-container"><img class="hr-4" id="hr4" src="images/line4.png" alt=""></div>
+                    <div class="line-container"><img class="hr-5" id="hr5" src="images/line5.png" alt=""></div>
+                </div>
+                <!-- THIS DIV CONTAINS VALUES UNDER DISPLAY SCREEN -->
+                <div class="main-values-container">
+                    <div class="value-container"><img class="value-img" src="images/balance.png" alt="balance"><p class="value-txt" id="balance">0</p></div>
+                    <div class="value-container"><img class="value-img" src="images/bet.png" alt="your-bet"><p class="value-txt" id="bet">0</p></div>
+                    <div class="value-container"><img class="value-img" src="images/last-win.png" alt="last-win"><p class="value-txt" id="last-win">0</p></div>   
+                </div>
+                <!-- THIS IS ONLY GAME BUTTONS CONTAINER -->
+                <div class="buttons-container">
+                    <button class="btn" id="dep-btn">დეპოზიტი</button>
+                    <button class="btn" id="bet-btn">ბეთი</button>
+                    <button class="btn" id="spin-btn">დატრიალება</button>
+                    <button class="btn" id="stop-btn">გაჩერება</button>     
+                </div>
+            </div>
         </div>
-        <div class="main-values-container">
-            <div class="value-container"><img class="value-img" src="images/balance.png" alt="balance"><p class="value-txt" id="balance">0</p></div>
-            <div class="value-container"><img class="value-img" src="images/bet.png" alt="your-bet"><p class="value-txt" id="bet">0</p></div>
-            <div class="value-container"><img class="value-img" src="images/last-win.png" alt="last-win"><p class="value-txt" id="last-win">0</p></div>   
-        </div>
-        <div class="buttons-container">
-            <button class="btn" id="dep-btn">დეპოზიტი</button>
-            <button class="btn" id="bet-btn">ბეთი</button>
-            <button class="btn" id="spin-btn">დატრიალება</button>
-            <button class="btn" id="stop-btn">გაჩერება</button>     
-        </div>
-        
-    </div>
-    <button id="zoomOutButton">Zoom Out</button>
-</body>
+        <!-- THIS BUTTON IS USED FOR ZOOM OUT ON MOBILE DEVICES TO SEE FULL GAME CONTENT (RESPONSIVE BUTTON :) -->
+        <button id="zoom-btn">Zoom Out</button>
+    </body>
 </html>

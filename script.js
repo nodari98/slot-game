@@ -15,47 +15,29 @@
 ////__1.added mark line when win, now you can easily see which line wins.__________________________________________________////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // დავამატოთ წითელი შავის ფუნქცია. (GAMBLE)
 // დავამატოთ ბონუსი. (BONUS GAME)
-// დავამატოთ მოგებული ხაზების გახაზვის ფუნქცია.
 // დავამატოთ ხაზების შეცვლის ფუნქცია.
-
-
-/* variables */
-const pressSound = new Audio("sounds/press.mp3"); // BUTTON CLICK SOUND
-const coinDropSound = new Audio("sounds/coindrop.mp3"); // WIN SOUND
-
-let balance = 100; // SET BALANCE
-update(balance);
-let bet = 1; // SET BET
-update(bet);
-let lastWin = 0; // SET LAST WIN
-update(lastWin);
-
-let line1;
-let line2;
-let line3;
-let line4;
-let line5;
-
+//  ********************************* VARIABLES ********************************* //
+let balance = 100;
+let bet = 1;
+let lastWin = 0;
 let spinEndTime = 1430; // TIME WHEN SPIN FULL CICLE ENDS
-
-
+let symbolsContainer = []; // TO STORE SYMBOL INDEXES ON EACH SPIN
+let win = false; // TO CHECK IF WIN
+let zoomOut = false;
+let isSpinClicked = true; //FOR SPIN/STOP BUTTON SWITCH
+let line1, line2, line3, line4, line5;
+let lineTimeout1,lineTimeout2,lineTimeout3,lineTimeout4,lineTimeout5;
 let rowTimeOut1, rowTimeOut2, rowTimeOut3, rowTimeOut4, rowTimeOut5; // TO STOP SPIN ANIMATION
 let winTimeOut; // TO GET INSTANT PAYOUT IF WIN - FOR STOP BUTTON
 
-let win = false; // TO CHECK IF WIN
-let symbolsContainer = []; // TO STORE SYMBOL INDEXES ON EACH SPIN
-let isSpinClicked = true; //FOR SPIN/STOP BUTTON SWITCH
-
-
-let lineTimeout1,lineTimeout2,lineTimeout3,lineTimeout4,lineTimeout5;
-/* end of variables */
-
+update(balance);
+update(bet);
+update(lastWin);
+//  ********************************* BUTTONS WITH FUNCTIONS ********************************* //
 document.getElementById("dep-btn").addEventListener("click", depositButton); // BUTTON FOR ADD DEPOSIT
 function depositButton(){
-    pressSound.play();
     
     var addedMoney = prompt("თანხის შეტანა:");
     var parsedMoney = parseFloat(addedMoney);
@@ -75,7 +57,6 @@ function depositButton(){
 }
 document.getElementById("bet-btn").addEventListener("click", betButton); // BUTTON FOR INCREASE BET
 function betButton(){
-    pressSound.play();
     
     if (bet < 10) {
         bet++;
@@ -99,7 +80,6 @@ function betButton(){
 }
 document.getElementById("spin-btn").addEventListener("click", spinButton); // BUTTON FOR START SPIN
 function spinButton(){ 
-    pressSound.play();
     if(balance >= bet){
         balance -= bet;
         update(balance);
@@ -113,9 +93,8 @@ function spinButton(){
         alert("თქვენ არ გაქვთ საკმარისი თანხა.");
     }
 }
-document.getElementById("stop-btn").addEventListener("click", stopButton); // BUTTON FORA STOP SPIN
+document.getElementById("stop-btn").addEventListener("click", stopButton); // BUTTON FOR STOP SPIN
 function stopButton(){
-    pressSound.play();  
     for(var i=1; i<=15; i++){
         document.getElementById("cell-"+i).style.visibility = "visible"; 
     }
@@ -135,8 +114,28 @@ function stopButton(){
     updateLastWin();
     spinStopSwitcher();
 }
-
-/* functions */
+document.getElementById('zoom-btn').addEventListener('click', zoomButton); // BUTTON FOR ZOOM IN/OUT
+function zoomButton(){
+    if(!zoomOut){
+        // Calculate the new scale for zooming out (e.g., 0.8 for 80%)
+        var newScale = 0.7;
+    
+        // Apply the new scale to the body element
+        document.body.style.transform = 'scale(' + newScale + ')';
+        document.getElementById("zoom-btn").textContent = "Zoom In";
+        zoomOut = true;
+        } else {
+    
+        // Calculate the new scale for zooming out (e.g., 0.8 for 80%)
+        var newScale = 1;
+    
+        // Apply the new scale to the body element
+        document.body.style.transform = 'scale(' + newScale + ')';
+        document.getElementById("zoom-btn").textContent = "Zoom Out";
+        zoomOut = false;
+        }
+}
+//  ********************************* MORE FUNCTIONS ********************************* //
 //I'ts done don't touch.
 function generateAndPushRandomSymbols(){ 
     for(var i=1; i<=15; i++){
@@ -326,7 +325,6 @@ function updateLastWin(){
     lastWin = balance - lastWin;
     if(win){
         update(lastWin);
-        coinDropSound.play();
         win = false;
         line1 = false;
         line2 = false;
@@ -475,12 +473,3 @@ function showWinningLines(){
         document.getElementById("hr5").style.display = "block";
     }
 }
-
-
-document.getElementById('zoomOutButton').addEventListener('click', function() {
-    // Calculate the new scale for zooming out (e.g., 0.8 for 80%)
-    var newScale = 0.7;
-
-    // Apply the new scale to the body element
-    document.body.style.transform = 'scale(' + newScale + ')';
-});
